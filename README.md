@@ -10,7 +10,7 @@
 - [X] Zaimplementuj funkcje przechodzenia grafu wszerz i w głąb (z wyświetlaniem). – Dybde-først-søk og Bredde-først-søk med utstilling
 - [ ] Zaimplementuj dwa algorytmy sortowania topologicznego dla każdej z reprezentacji zgodnie z algorytmem przeszukiwania:
 - [ ] w głąb - etykietowanie wierzchołków (biały-nieodwiedzony, szary-przetwarzany, czarny-zakończony)
-- [ ] wszerz - wyszukiwanie wierzchołków bez krawędzi wejściowych, usuwanie ich następników, powtarzanie iteracji dopóki wszystkie wierzchołki nie będą wypisane
+- [X] wszerz - wyszukiwanie wierzchołków bez krawędzi wejściowych, usuwanie ich następników, powtarzanie iteracji dopóki wszystkie wierzchołki nie będą wypisane
 - [X] Po utworzeniu grafu (losowo lub z klawiatury) użytkownik może dla tego grafu wykonać dowolne procedury przeglądania lub sortowania grafu
 
 ## TEST
