@@ -1,6 +1,6 @@
 # GRAFER
 
-## Å GJØRE
+## GJØR
 
 - [ ] Wygeneruj spójny skierowany graf acykliczny o n wierzchołkach
   - [ ] współczynnik nasycenia łukami w grafie powinien być równy 50% (czyli 50% z `n(n-1)/2`)
@@ -13,7 +13,7 @@
 - [ ] wszerz - wyszukiwanie wierzchołków bez krawędzi wejściowych, usuwanie ich następników, powtarzanie iteracji dopóki wszystkie wierzchołki nie będą wypisane
 - [ ] Po utworzeniu grafu (losowo lub z klawiatury) użytkownik może dla tego grafu wykonać dowolne procedury przeglądania lub sortowania grafu
 
-## Å TESTE
+## TEST
 
 - [ ] dokonaj pomiaru czasu działania algorytmów dla każdej reprezentacji grafu
 - [ ] ogólne idee algorytmów, mają być takie same dla różnych reprezentacji grafu, różnice wynikają z innej złożoności wyszukiwania następników w grafie
