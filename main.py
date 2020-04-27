@@ -1,6 +1,5 @@
 from tabulate import tabulate
 from copy import deepcopy
-import itertools
 
 
 def generate():
@@ -33,7 +32,7 @@ def macierz_sasiedztwa(matrix):
 def lista_nastepnikow(matrix):
     print("\nLista nastepnikow")
     result = []
-    result2 = []  # jesli by byla do czegos potrzebna
+    result2 = []
     n = len(matrix)
     for i in range(n):
         nastepniki = []
@@ -41,8 +40,9 @@ def lista_nastepnikow(matrix):
             if matrix[i][j] == 1:
                 nastepniki.append(j+1)
         result.append([i+1, " -> ".join(list(map(str, nastepniki)))])
-        result2.append([i+1, nastepniki])  # jesli by byla do czegos potrzebna
+        result2.append([i+1, nastepniki])
     print(tabulate(result, headers=['V', 'lista'], tablefmt='orgtbl'))
+    return result2
 
 
 def tabela_krawedzi(matrix):
@@ -56,14 +56,31 @@ def tabela_krawedzi(matrix):
     print(tabulate(table, headers=["out", "in"], tablefmt='orgtbl'))
 
 
-def przegladanieDFS(graph):
-    print("Przegladanie DFS")
-    pass
+def find_next(v, result, successors):
+    if v in result:
+        return result
+    result.append(v)
+    for i in range(len(successors)):
+        if successors[i][0] == v:
+            nastepniki_v = successors[i][1]
+            for el in nastepniki_v:
+                result = find_next(el, result, successors)
+            break
+    return result
+
+
+def przegladanieDFS(matrix, successors):
+    print("\nPrzegladanie DFS")
+    res = []
+    for i in range(len(successors)):
+        res = find_next(successors[i][0], res, successors)
+    res = " -> ".join(list(map(str, res)))
+    return res
 
 
 def przegladanieBFS(graph):
     print("Przegladanie BFS")
-    pass
+
 
 
 def sortowanieDFS(graph):
@@ -93,7 +110,7 @@ while True:
     if x == 0:
         break
     elif x == 1:
-        # graph = generate()
+        # martix = generate()
         generate()
     elif x == 2:
         matrix = create_graph()
@@ -101,23 +118,23 @@ while True:
         print("Nalezy podac liczbe 0-2.")
         continue
     macierz_sasiedztwa(deepcopy(matrix))
-    lista_nastepnikow(deepcopy(matrix))
+    successors_list = lista_nastepnikow(deepcopy(matrix))
     tabela_krawedzi(deepcopy(matrix))
     while True:
         try:
             n = int(input("\nWybierz dzialanie dla podanego grafu:\n0.Wyjscie\n"
                           "1.Przegladanie DFS\n"
                           "2.Przegladanie BFS\n"
-                          "3.Sortowanie topologiczne DFS\n "
+                          "3.Sortowanie topologiczne DFS\n"
                           "4.Sortowanie topologiczne BFS\n->"))
         except ValueError:
             print("Nalezy podac liczbe 0-4.")
             continue
+
         if n == 0:
             break
         elif n == 1:
-            print(1)
-            # print(przegladanieDFS(graph))
+            print(przegladanieDFS(matrix, successors_list))
         elif n == 2:
             print(2)
             # print(przegladanieBFS(graph))
