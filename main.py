@@ -56,7 +56,7 @@ def tabela_krawedzi(matrix):
     print(tabulate(table, headers=["out", "in"], tablefmt='orgtbl'))
 
 
-def find_next(v, result, successors):
+def dfs(v, result, successors):
     if v in result:
         return result
     result.append(v)
@@ -64,31 +64,55 @@ def find_next(v, result, successors):
         if successors[i][0] == v:
             nastepniki_v = successors[i][1]
             for el in nastepniki_v:
-                result = find_next(el, result, successors)
+                result = dfs(el, result, successors)
             break
     return result
 
 
-def przegladanieDFS(matrix, successors):
+def przegladanie_dfs(successors):
     print("\nPrzegladanie DFS")
     res = []
     for i in range(len(successors)):
-        res = find_next(successors[i][0], res, successors)
+        res = dfs(successors[i][0], res, successors)
     res = " -> ".join(list(map(str, res)))
     return res
 
 
-def przegladanieBFS(graph):
-    print("Przegladanie BFS")
+def bfs(v, result, successors):
+    for i in range(len(successors)):
+        if successors[i][0] == v:
+            nastepniki_v = successors[i][1]
+            to_ignore = []
+            for el in nastepniki_v:
+                if el not in result:
+                    result.append(el)
+                else:
+                    to_ignore.append(el)
+            for el in nastepniki_v:
+                if el not in to_ignore:
+                    result = bfs(el, result, successors)
+            break
+    return result
 
 
+def przegladanie_bfs(successors):
+    print("\nPrzegladanie BFS")
+    res = []
+    for i in range(len(successors)):
+        nastepniki = successors[i][0]
+        if nastepniki not in res:
+            res.append(nastepniki)
+            res = bfs(nastepniki, res, successors)
+    res = " -> ".join(list(map(str, res)))
+    return res
 
-def sortowanieDFS(graph):
+
+def sortowanieDFS(matrix):
     print("Sortowanie DFS")
     pass
 
 
-def sortowanieBFS(graph):
+def sortowanieBFS(matrix):
     print("Sortowanie BFS")
     pass
 
@@ -134,16 +158,13 @@ while True:
         if n == 0:
             break
         elif n == 1:
-            print(przegladanieDFS(matrix, successors_list))
+            print(przegladanie_dfs(successors_list))
         elif n == 2:
-            print(2)
-            # print(przegladanieBFS(graph))
+            print(przegladanie_bfs(successors_list))
         elif n == 3:
-            print(3)
-            # print(sortowanieDFS(graph))
+            print(sortowanieDFS(deepcopy(matrix)))
         elif n == 4:
-            print(4)
-            # print(sortowanieBFS(graph))
+            print(sortowanieBFS(deepcopy(matrix)))
         else:
             print("Nalezy podac liczbe 0-4.")
             continue
