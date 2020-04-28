@@ -6,12 +6,12 @@
   - [ ] współczynnik nasycenia łukami w grafie powinien być równy 50% (czyli 50% z `n(n-1)/2`)
   - [ ] najłatwiej jest utworzyć graf acykliczny skierowany poprzez wypełnienie odpowiednią liczbą jedynek górnego trójkąta macierzy sąsiedztwa
 - [x] Graf może zostać utworzony również poprzez podanie z klawiatury wierszy macierzy sąsiedztwa
-- [X] Graf jest reprezentowany poprzez macierz sąsiedztwa, listę następników oraz tabelę krawędzi - wyświetl je.
-- [X] Zaimplementuj funkcje przechodzenia grafu wszerz i w głąb (z wyświetlaniem). – Dybde-først-søk og Bredde-først-søk med utstilling
+- [x] Graf jest reprezentowany poprzez macierz sąsiedztwa, listę następników oraz tabelę krawędzi - wyświetl je.
+- [x] Zaimplementuj funkcje przechodzenia grafu wszerz i w głąb (z wyświetlaniem). – Dybde-først-søk og Bredde-først-søk med utstilling
 - [ ] Zaimplementuj dwa algorytmy sortowania topologicznego dla każdej z reprezentacji zgodnie z algorytmem przeszukiwania:
-- [ ] w głąb - etykietowanie wierzchołków (biały-nieodwiedzony, szary-przetwarzany, czarny-zakończony)
-- [X] wszerz - wyszukiwanie wierzchołków bez krawędzi wejściowych, usuwanie ich następników, powtarzanie iteracji dopóki wszystkie wierzchołki nie będą wypisane
-- [X] Po utworzeniu grafu (losowo lub z klawiatury) użytkownik może dla tego grafu wykonać dowolne procedury przeglądania lub sortowania grafu
+  - [ ] w głąb - etykietowanie wierzchołków (biały-nieodwiedzony, szary-przetwarzany, czarny-zakończony)
+  - [x] wszerz - wyszukiwanie wierzchołków bez krawędzi wejściowych, usuwanie ich następników, powtarzanie iteracji dopóki wszystkie wierzchołki nie będą wypisane
+- [x] Po utworzeniu grafu (losowo lub z klawiatury) użytkownik może dla tego grafu wykonać dowolne procedury przeglądania lub sortowania grafu
 
 ## TEST
 
@@ -20,3 +20,31 @@
 - [ ] nie należy przekształcać każdej reprezentacji np. w liste następników, a nastepnie sortować
 - [ ] nie należy upraszczać algorytmów ze względu na przygotowanie danych wejściowych (np. macierz sąsiedztwa jest górnotrójkątna i tylko tam sprawdzamy czy są łuki)
 - [ ] Pomiary czasu przedstaw na wykresie `t=f(n)`, dla 10 różnych wartości `n`
+
+## Bruk av Grafgenerator
+
+### Używanie jak CLI
+
+```sh
+# wygeneruj z pytaniem o wielkosć grafu
+python3 ggen.py
+
+# wygeneruj z określoną wielkością
+# python3 ggen.py [SIZE]
+python3 ggen.py 10
+
+# wygeneruj z danymi wejściowymi do potoku
+# python3 ggen.py [SIZE] -test
+python3 ggen.py 10 -test
+
+# użycie w potoku; przykład
+python3 ggen.py 10 -test | python3 main.py
+```
+
+### Używanie jako modułu
+
+```py
+from ggen import Generator
+# …
+graphMatrix = Generator(size).matrix
+```
