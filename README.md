@@ -2,9 +2,9 @@
 
 ## GJØR
 
-- [ ] Wygeneruj spójny skierowany graf acykliczny o n wierzchołkach
-  - [ ] współczynnik nasycenia łukami w grafie powinien być równy 50% (czyli 50% z `n(n-1)/2`)
-  - [ ] najłatwiej jest utworzyć graf acykliczny skierowany poprzez wypełnienie odpowiednią liczbą jedynek górnego trójkąta macierzy sąsiedztwa
+- [x] Wygeneruj spójny skierowany graf acykliczny o n wierzchołkach
+  - [x] współczynnik nasycenia łukami w grafie powinien być równy 50% (czyli 50% z `n(n-1)/2`)
+  - [x] najłatwiej jest utworzyć graf acykliczny skierowany poprzez wypełnienie odpowiednią liczbą jedynek górnego trójkąta macierzy sąsiedztwa
 - [x] Graf może zostać utworzony również poprzez podanie z klawiatury wierszy macierzy sąsiedztwa
 - [x] Graf jest reprezentowany poprzez macierz sąsiedztwa, listę następników oraz tabelę krawędzi - wyświetl je.
 - [x] Zaimplementuj funkcje przechodzenia grafu wszerz i w głąb (z wyświetlaniem). – Dybde-først-søk og Bredde-først-søk med utstilling
