@@ -44,4 +44,4 @@ if __name__ == '__main__':
     [print("".join([f'{el: 3}' for el in row]))
      for row in Generator(times).matrix]
     if do_test:
-        print('0\n0')
+        print('1\n2\n3\n4\n0\n0')

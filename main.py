@@ -1,11 +1,10 @@
-from tabulate import tabulate
 from copy import deepcopy
 
+from tabulate import tabulate
+from click import style
 
-def generate():
-    """Generuje graf"""
-    pass
-    # return graph
+from ggen import Generator
+from repr import *
 
 
 def create_graph():
@@ -38,9 +37,9 @@ def lista_nastepnikow(matrix):
         nastepniki = []
         for j in range(n):
             if matrix[i][j] == 1:
-                nastepniki.append(j+1)
-        result.append([i+1, " -> ".join(list(map(str, nastepniki)))])
-        result2.append([i+1, nastepniki])
+                nastepniki.append(j + 1)
+        result.append([i + 1, " -> ".join(list(map(str, nastepniki)))])
+        result2.append([i + 1, nastepniki])
     print(tabulate(result, headers=['V', 'lista'], tablefmt='orgtbl'))
     return result2
 
@@ -52,7 +51,7 @@ def tabela_krawedzi(matrix):
     for i in range(n):
         for j in range(n):
             if matrix[i][j] == 1:
-                table.append([i+1, j+1])
+                table.append([i + 1, j + 1])
     print(tabulate(table, headers=["out", "in"], tablefmt='orgtbl'))
     return table
 
@@ -108,27 +107,46 @@ def przegladanie_bfs(successors):
     return res
 
 
-def sortowanieDFS(matrix):
-    print("Sortowanie DFS")
-    pass
+def dfs_sort_matrix(matrix):
+    res = []
+    print(style("Sortowanie DFS >> Macierz", fg='blue'))
+    # for i in range(len(matrix)):
+    #     if matrix[i][i] == 0:
+    #         matrix[i][i] = 1  # "szary"
+    #     if
 
 
-# sortowanie BFS
-# macierz
-def create_in_degree_matrix(matrix):
-    in_degree = []
-    for i in range(len(matrix)):
-        degree = matrix[i].count(-1)
-        in_degree.append([i+1, degree])
-    return in_degree
-
-
+# FUNCS
 def next_by_matrix(matrix, i):
     successors = []
     for j in range(len(matrix[i])):
         if matrix[i][j] == 1:
-            successors.append(j+1)
+            successors.append(j + 1)
     return successors
+
+
+def next_by_list(list, i):
+    return list[i][1]
+
+
+def next_by_table(table, i):
+    successors = []
+    for j in range(len(table)):
+        if table[j][0] == i + 1:
+            successors.append(table[j][1])
+    return successors
+
+
+# sortowanie BFS
+# macierz
+
+
+def create_in_degree_matrix(matrix):
+    in_degree = []
+    for i in range(len(matrix)):
+        degree = matrix[i].count(-1)
+        in_degree.append([i + 1, degree])
+    return in_degree
 
 
 def sort_bfs_by_matrix(matrix):
@@ -142,7 +160,7 @@ def create_in_degree_list(list, n):
     in_degree = []
     flatten = sum([list[k][1] for k in range(len(list))], [])
     for i in range(n):
-        degree = flatten.count(i+1)
+        degree = flatten.count(i + 1)
         in_degree.append([i + 1, degree])
     return in_degree
 
@@ -167,14 +185,6 @@ def create_in_degree_table(table, n):
     return in_degree
 
 
-def next_by_table(table, i):
-    successors = []
-    for j in range(len(table)):
-        if table[j][0] == i+1:
-            successors.append(table[j][1])
-    return successors
-
-
 def sort_bfs_by_table(table, n):
     print("\nDla tabeli krawedzi")
     in_degree = create_in_degree_table(table, n)
@@ -194,58 +204,62 @@ def sortowanieBFS(in_degree, find_next, data):
         for i in range(len(in_degree)):
             if in_degree[i][1] == 0:
                 in_degree[i][1] = -1
-                result.append(i+1)
+                result.append(i + 1)
                 successors = find_next(data, i)
                 in_degree = lower_degree(successors, in_degree)
     return " -> ".join(list(map(str, result)))
 
 
-while True:
-    try:
-        x = int(input("\nWybierz opcje:\n0.Wyjscie\n"
-                      "1.Wygenerowac graf losowo\n"
-                      "2.Podac macierz sasiedztwa z klawiatury\n->"))
-    except ValueError:
-        print("Nalezy podac liczbe 0-2.")
-        continue
-    if x == 0:
-        break
-    elif x == 1:
-        # martix = generate()
-        generate()
-    elif x == 2:
-        matrix = create_graph()
-    else:
-        print("Nalezy podac liczbe 0-2.")
-        continue
-    macierz_sasiedztwa(deepcopy(matrix))
-    successors_list = lista_nastepnikow(deepcopy(matrix))
-    edge_table = tabela_krawedzi(deepcopy(matrix))
+if __name__ == '__main__':
     while True:
         try:
-            n = int(input("\nWybierz dzialanie dla podanego grafu:\n0.Wyjscie\n"
-                          "1.Przegladanie DFS\n"
-                          "2.Przegladanie BFS\n"
-                          "3.Sortowanie topologiczne DFS\n"
-                          "4.Sortowanie topologiczne BFS\n->"))
+            x = int(input("\nWybierz opcje:\n0.Wyjscie\n"
+                          "1.Wygenerowac graf losowo\n"
+                          "2.Podac macierz sasiedztwa z klawiatury\n-> "))
         except ValueError:
-            print("Nalezy podac liczbe 0-4.")
+            print(style("[!] Nalezy podac liczbe z zakresu 0..2", fg='red'))
             continue
 
-        if n == 0:
+        if x == 0:
             break
-        elif n == 1:
-            print(przegladanie_dfs(successors_list))
-        elif n == 2:
-            print(przegladanie_bfs(successors_list))
-        elif n == 3:
-            print("\n-----Sortowanie topologiczne DFS-----")
-            print(sortowanieDFS(deepcopy(matrix)))
-        elif n == 4:
-            print("\n-----Sortowanie topologiczne BFS-----")
-            print(sort_bfs_by_matrix(deepcopy(matrix)))
-            print(sort_bfs_by_list(successors_list, len(matrix)))
-            print(sort_bfs_by_table(edge_table, len(matrix)))
+        elif x == 1:
+            _gen_size = int(input("Podaj liczbę wierzchołków grafu -> "))
+            matrix = Generator(_gen_size).matrix
+        elif x == 2:
+            matrix = create_graph()
         else:
-            print("Nalezy podac liczbe 0-4.")
+            print(style("[!] Nalezy podac liczbe z zakresu 0..2", fg='red'))
             continue
+
+        macierz_sasiedztwa(deepcopy(matrix))
+        successors_list = lista_nastepnikow(deepcopy(matrix))
+        edge_table = tabela_krawedzi(deepcopy(matrix))
+        while True:
+            try:
+                n = int(input(style("\n(0) Wyjscie\n"
+                                    "(1) Przegladanie DFS\n"
+                                    "(2) Przegladanie BFS\n"
+                                    "(3) Sortowanie topologiczne DFS\n"
+                                    "(4) Sortowanie topologiczne BFS\n", fg='black', bold=True) +
+                              "    Wybierz dzialanie [0/1/2/3/4] -> "))
+            except ValueError:
+                print(style("[!] Nalezy podac liczbe z zakresu 0..4", fg='red'))
+                continue
+
+            if n == 0:
+                break
+            elif n == 1:
+                print(przegladanie_dfs(successors_list))
+            elif n == 2:
+                print(przegladanie_bfs(successors_list))
+            elif n == 3:
+                print("\n-----Sortowanie topologiczne DFS-----")
+                print(dfs_sort_matrix(deepcopy(matrix)))
+            elif n == 4:
+                print("\n-----Sortowanie topologiczne BFS-----")
+                print(sort_bfs_by_matrix(deepcopy(matrix)))
+                print(sort_bfs_by_list(successors_list, len(matrix)))
+                print(sort_bfs_by_table(edge_table, len(matrix)))
+            else:
+                print("Nalezy podac liczbe 0-4.")
+                continue
