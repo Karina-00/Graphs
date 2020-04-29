@@ -135,7 +135,7 @@ def sort_bfs_by_matrix(matrix):
 # list
 def create_in_degree_list(list, n):
     in_degree = []
-    flatten = sum([list[k][1] for k in range(len(list))], [])
+    flatten = [val for sublist in list for val in sublist[1]]
     for i in range(n):
         degree = flatten.count(i + 1)
         in_degree.append([i + 1, degree])
